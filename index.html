@@ -140,15 +140,23 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-border">
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira install</td><td class="px-5 py-3 text-muted">Install the Aegira service</td></tr>
                     <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira status</td><td class="px-5 py-3 text-muted">Check if Aegira is running</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules list</td><td class="px-5 py-3 text-muted">See all active rules</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules show &lt;id&gt;</td><td class="px-5 py-3 text-muted">View rule details</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira run</td><td class="px-5 py-3 text-muted">Start monitoring in foreground</td></tr>
                     <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira history</td><td class="px-5 py-3 text-muted">View past incidents</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure container &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target container</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure service &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target service</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure multi &lt;c1&gt; &lt;c2&gt;</td><td class="px-5 py-3 text-muted">Set multiple containers</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure alerts on &lt;email&gt;</td><td class="px-5 py-3 text-muted">Enable email alerts</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira show-rules</td><td class="px-5 py-3 text-muted">List active rules (short)</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules list</td><td class="px-5 py-3 text-muted">List all active rules (detailed)</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules show &lt;id&gt;</td><td class="px-5 py-3 text-muted">View rule details</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules export</td><td class="px-5 py-3 text-muted">Export all rules as JSON</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules disable &lt;id&gt;</td><td class="px-5 py-3 text-muted">Disable a rule</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules enable &lt;id&gt;</td><td class="px-5 py-3 text-muted">Enable a disabled rule</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure service &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target systemd service</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure container &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target Docker container</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure multi &lt;c1&gt; &lt;c2&gt; ...</td><td class="px-5 py-3 text-muted">Set multiple target containers</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure auto &lt;name&gt; [--container]</td><td class="px-5 py-3 text-muted">Auto-configure service or container</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure alerts &lt;on|off&gt; [email]</td><td class="px-5 py-3 text-muted">Enable/disable email alerts</td></tr>
                     <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira docker-status &lt;name&gt;</td><td class="px-5 py-3 text-muted">Inspect a container's state</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">aegira --help</td><td class="px-5 py-3 text-muted">Show usage</td></tr>
                 </tbody>
             </table>
         </div>
@@ -307,7 +315,6 @@
         <div class="flex items-center justify-center gap-6 text-sm text-muted flex-wrap">
             <a href="https://aegiralabs-io.github.io/aegira-labs-web/" class="hover:text-text transition">Website</a>
             <a href="https://github.com/talatsajafa/Aegira-free-v1-releases" class="hover:text-text transition">GitHub</a>
-            <a href="https://github.com/talatsajafa/Aegira-free-v1-releases/issues" class="hover:text-text transition">Issues</a>
             <a href="mailto:aegira.dev@gmail.com" class="hover:text-text transition">Contact</a>
         </div>
         <div class="mt-6 text-xs text-muted">
