@@ -177,6 +177,34 @@
             Place JSON files in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>.
         </p>
 
+        <!-- How to add a rule -->
+        <h3 class="text-xl font-semibold mb-4">Adding a Custom Rule</h3>
+
+        <ol class="text-sm text-muted space-y-3 mb-8 list-decimal list-inside">
+            <li>
+                Create a JSON file in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>
+                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo nano /etc/aegira/rules/custom/my-rule.json</code></pre>
+                </div>
+            </li>
+            <li>
+                Paste your rule JSON (see example below). Free allows up to <strong class="text-text">3 custom rules</strong>. Pro is unlimited.
+            </li>
+            <li>
+                Reload Aegira:
+                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl restart aegira.service</code></pre>
+                </div>
+            </li>
+            <li>
+                Verify it loaded:
+                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo aegira rules list</code></pre>
+                </div>
+            </li>
+        </ol>
+
+        <!-- Example rule -->
         <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
             <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
                 <span class="ml-2 text-xs text-muted font-mono">example.json</span>
@@ -204,12 +232,90 @@
 }</code></pre>
         </div>
 
-        <p class="text-sm text-muted mb-4">
-            After adding a rule, reload Aegira:
-        </p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden">
-            <pre class="p-5 font-mono text-sm overflow-hidden bg-bg/50"><code><span class="text-accent3">$</span> sudo systemctl restart aegira.service
-<span class="text-accent3">$</span> sudo aegira rules list</code></pre>
+        <!-- Rule fields reference -->
+        <h3 class="text-xl font-semibold mb-4 mt-10">Rule Fields Reference</h3>
+
+        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+            <table class="w-full text-sm">
+                <thead class="bg-accent/5 border-b border-border">
+                    <tr>
+                        <th class="text-left px-5 py-3 font-semibold">Field</th>
+                        <th class="text-left px-5 py-3 font-semibold">Required</th>
+                        <th class="text-left px-5 py-3 font-semibold">Description</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-border">
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">id</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Unique rule ID (lowercase, no spaces)</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">name</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Human-readable name</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">severity</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">low / medium / high / critical</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">error_patterns</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Log substrings that trigger the rule</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">context_patterns</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Additional context substrings (higher match score)</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">trigger</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">log / docker_exit / docker_health / docker_oom / http_health / container_probe / service_down</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">remediation</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_restart, container_restart, command, container_exec, command_sequence, alert_only</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">verification</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_active, container_running, container_healthy, http_status, container_http_status, command_success, none</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">action</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">auto_recover / alert_only / dry_run / approval_required</td></tr>
+                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">priority</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Higher = matched first (default 0)</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Rule examples -->
+        <h3 class="text-xl font-semibold mb-4 mt-10">Rule Examples</h3>
+
+        <p class="text-sm text-muted mb-3 font-semibold">Restart a systemd service on log error:</p>
+        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+  "id": "nginx_restart",
+  "name": "Restart Nginx on connection error",
+  "error_patterns": ["nginx: connection refused"],
+  "trigger": {"type": "log"},
+  "remediation": {"type": "service_restart", "service": "nginx"},
+  "verification": {"type": "service_active", "service": "nginx"},
+  "action": "auto_recover",
+  "priority": 50
+}</code></pre>
+        </div>
+
+        <p class="text-sm text-muted mb-3 font-semibold">Restart a Docker container on exit 137:</p>
+        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+  "id": "app_container_restart",
+  "name": "Restart app container on exit 137",
+  "error_patterns": ["exit code 137"],
+  "trigger": {"type": "docker_exit", "container": "my-app", "exit_codes": [137]},
+  "remediation": {"type": "container_restart", "container": "my-app"},
+  "verification": {"type": "container_running", "container": "my-app"},
+  "action": "auto_recover",
+  "priority": 50
+}</code></pre>
+        </div>
+
+        <p class="text-sm text-muted mb-3 font-semibold">Heal a service inside a container without restarting it:</p>
+        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+  "id": "nginx_reload",
+  "name": "Reload nginx config inside container",
+  "error_patterns": ["nginx config error"],
+  "trigger": {"type": "log"},
+  "remediation": {"type": "container_exec", "container": "nginx", "args": ["nginx", "-s", "reload"]},
+  "verification": {"type": "container_http_status", "container": "nginx", "url": "http://127.0.0.1:8080/health", "expected_status": 200},
+  "action": "auto_recover",
+  "priority": 50
+}</code></pre>
+        </div>
+
+        <p class="text-sm text-muted mb-3 font-semibold">Alert only — no automatic remediation:</p>
+        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+  "id": "disk_full_alert",
+  "name": "Alert on disk full",
+  "error_patterns": ["no space left on device"],
+  "trigger": {"type": "log"},
+  "remediation": {"type": "alert_only"},
+  "verification": {"type": "none"},
+  "action": "alert_only",
+  "priority": 50
+}</code></pre>
         </div>
 
         <div class="mt-6 p-5 rounded-2xl border border-peach/30 bg-peach/5">
