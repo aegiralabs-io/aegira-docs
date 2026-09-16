@@ -182,7 +182,6 @@
                 Place JSON files in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>.
             </p>
 
-            <!-- How to add a rule -->
             <h3 class="text-xl font-semibold mb-4">Adding a Custom Rule</h3>
 
             <ol class="text-sm text-muted space-y-3 mb-8 list-decimal list-inside">
@@ -209,7 +208,6 @@
                 </li>
             </ol>
 
-            <!-- Example rule -->
             <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
                 <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
                     <span class="ml-2 text-xs text-muted font-mono">example.json</span>
@@ -237,7 +235,6 @@
 }</code></pre>
             </div>
 
-            <!-- Rule fields reference -->
             <h3 class="text-xl font-semibold mb-4 mt-10">Rule Fields Reference</h3>
 
             <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
@@ -264,7 +261,6 @@
                 </table>
             </div>
 
-            <!-- Rule examples -->
             <h3 class="text-xl font-semibold mb-4 mt-10">Rule Examples</h3>
 
             <p class="text-sm text-muted mb-3 font-semibold">Restart a systemd service on log error:</p>
@@ -435,8 +431,8 @@
             </h2>
 
             <p class="text-lg text-muted mb-10 max-w-xl mx-auto">
-                The Pro version is launching soon with multi-service monitoring,
-                unlimited rules, and systemd service status monitoring.
+                The Pro version is launching soon with 40+ builtin rules, unlimited custom rules,
+                multi-service + multi-container mix, and systemd service status monitoring.
             </p>
 
             <div class="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
@@ -447,8 +443,8 @@
                 </div>
                 <div class="p-6 rounded-2xl bg-card border border-border">
                     <div class="text-2xl mb-3">📦</div>
-                    <h3 class="font-semibold mb-2">Multi-Service</h3>
-                    <p class="text-sm text-muted">Monitor many services at once</p>
+                    <h3 class="font-semibold mb-2">Multi-Service + Multi-Container</h3>
+                    <p class="text-sm text-muted">Mix and match freely</p>
                 </div>
                 <div class="p-6 rounded-2xl bg-card border border-border">
                     <div class="text-2xl mb-3">👁️</div>
@@ -532,7 +528,7 @@
         <div class="flex items-center justify-center gap-6 text-sm text-muted flex-wrap">
             <a href="https://aegiralabs-io.github.io/aegira-labs-web/" class="hover:text-text transition">Website</a>
             <a href="https://github.com/talatsajafa/Aegira-free-v1-releases" class="hover:text-text transition">GitHub</a>
-            <a href="mailto:aegira.dev@gmail.com" class="hover:text-text transition">Contact</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=aegira.dev@gmail.com&su=Aegira%20Inquiry" target="_blank" rel="noopener" class="hover:text-text transition">Contact</a>
         </div>
         <div class="mt-6 text-xs text-muted">
             © 2026 Aegira Labs
@@ -553,7 +549,6 @@
         tab.addEventListener('click', () => {
             const target = tab.getAttribute('data-tab');
 
-            // Update button styles
             tabs.forEach(t => {
                 t.classList.remove('bg-accent', 'text-bg');
                 t.classList.add('text-muted');
@@ -561,7 +556,6 @@
             tab.classList.add('bg-accent', 'text-bg');
             tab.classList.remove('text-muted');
 
-            // Show/hide content
             Object.entries(contents).forEach(([key, el]) => {
                 if (key === target) {
                     el.classList.remove('hidden');
@@ -570,7 +564,6 @@
                 }
             });
 
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
