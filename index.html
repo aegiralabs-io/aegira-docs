@@ -76,12 +76,17 @@
             <span class="font-bold text-lg">Aegira</span>
             <span class="text-muted text-sm">Docs</span>
         </a>
-        <div class="hidden md:flex items-center gap-8 text-sm">
-            <a href="#install" class="text-muted hover:text-text transition">Install</a>
-            <a href="#commands" class="text-muted hover:text-text transition">Commands</a>
-            <a href="#rules" class="text-muted hover:text-text transition">Rules</a>
-            <a href="#alerts" class="text-muted hover:text-text transition">Alerts</a>
-            <a href="https://aegiralabs-io.github.io/aegira-labs-web/" class="text-muted hover:text-text transition">← Back to site</a>
+        <div class="hidden md:flex items-center gap-1 text-sm">
+            <button data-tab="free" class="tab-btn px-4 py-2 rounded-lg font-semibold transition bg-accent text-bg">
+                Free
+            </button>
+            <button data-tab="pro" class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-muted hover:text-text">
+                Pro
+            </button>
+            <button data-tab="company" class="tab-btn px-4 py-2 rounded-lg font-semibold transition text-muted hover:text-text">
+                Company
+            </button>
+            <a href="https://aegiralabs-io.github.io/aegira-labs-web/" class="ml-4 text-muted hover:text-text transition">← Back to site</a>
         </div>
     </div>
 </nav>
@@ -98,118 +103,118 @@
     </div>
 </section>
 
-<!-- ─── Install ─── -->
-<section id="install" class="py-16 px-6 border-t border-border">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">Install</h2>
+<!-- ═══════════════════════════════════════════════════════════════
+     FREE TAB CONTENT
+════════════════════════════════════════════════════════════════ -->
+<div id="content-free" class="tab-content">
 
-        <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
-                <div class="w-3 h-3 rounded-full bg-peach/60"></div>
-                <div class="w-3 h-3 rounded-full bg-yellow/60"></div>
-                <div class="w-3 h-3 rounded-full bg-mint/60"></div>
-                <span class="ml-2 text-xs text-muted font-mono">terminal</span>
-            </div>
-            <pre class="p-6 font-mono text-sm overflow-hidden bg-bg/50"><code><span class="text-muted"># Download</span>
+    <!-- Install -->
+    <section id="install" class="py-16 px-6 border-t border-border">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Install</h2>
+
+            <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
+                    <div class="w-3 h-3 rounded-full bg-peach/60"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow/60"></div>
+                    <div class="w-3 h-3 rounded-full bg-mint/60"></div>
+                    <span class="ml-2 text-xs text-muted font-mono">terminal</span>
+                </div>
+                <pre class="p-6 font-mono text-sm overflow-hidden bg-bg/50"><code><span class="text-muted"># Download</span>
 <span class="text-accent3">$</span> wget https://github.com/talatsajafa/Aegira-free-v1-releases/releases/download/v1.0.0/aegira-free-v1.0.0-x86_64.tar.gz
 <span class="text-accent3">$</span> tar -xzf aegira-free-v1.0.0-x86_64.tar.gz
 
 <span class="text-muted"># Install (prompts for target)</span>
 <span class="text-accent3">$</span> sudo ./install.sh</code></pre>
-        </div>
-
-        <p class="text-sm text-muted">
-            Requires <strong class="text-text">Linux x86_64</strong>. Docker is optional.
-            The installer will guide you through target setup and optional email alerts.
-        </p>
-    </div>
-</section>
-
-<!-- ─── Commands ─── -->
-<section id="commands" class="py-16 px-6 border-t border-border bg-accent/5">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">Commands</h2>
-
-        <div class="rounded-2xl border border-border bg-card overflow-hidden">
-            <table class="w-full text-sm">
-                <thead class="bg-accent/5 border-b border-border">
-                    <tr>
-                        <th class="text-left px-5 py-3 font-semibold">Command</th>
-                        <th class="text-left px-5 py-3 font-semibold">Description</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border">
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira install</td><td class="px-5 py-3 text-muted">Install the Aegira service</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira status</td><td class="px-5 py-3 text-muted">Check if Aegira is running</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira run</td><td class="px-5 py-3 text-muted">Start monitoring in foreground</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira history</td><td class="px-5 py-3 text-muted">View past incidents</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira show-rules</td><td class="px-5 py-3 text-muted">List active rules (short)</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules list</td><td class="px-5 py-3 text-muted">List all active rules (detailed)</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules show &lt;id&gt;</td><td class="px-5 py-3 text-muted">View rule details</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules export</td><td class="px-5 py-3 text-muted">Export all rules as JSON</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules disable &lt;id&gt; [&lt;id&gt; ...]</td><td class="px-5 py-3 text-muted">Disable one or more rules</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules disable --pattern "prefix_*"</td><td class="px-5 py-3 text-muted">Disable rules matching pattern</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules disable-all-builtin</td><td class="px-5 py-3 text-muted">Disable all builtin rules</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules enable &lt;id&gt; [&lt;id&gt; ...]</td><td class="px-5 py-3 text-muted">Enable one or more rules</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules enable-all</td><td class="px-5 py-3 text-muted">Enable all rules</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure service &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target systemd service</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure services &lt;s1&gt; &lt;s2&gt; ...</td><td class="px-5 py-3 text-muted">Set multiple target services</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure container &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target Docker container</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure multi &lt;c1&gt; &lt;c2&gt; ...</td><td class="px-5 py-3 text-muted">Set multiple target containers</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure auto &lt;name&gt; [--container]</td><td class="px-5 py-3 text-muted">Auto-configure service or container</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure alerts &lt;on|off&gt; [email]</td><td class="px-5 py-3 text-muted">Enable/disable email alerts</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira docker-status &lt;name&gt;</td><td class="px-5 py-3 text-muted">Inspect a container's state</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira license</td><td class="px-5 py-3 text-muted">Show license status</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">aegira --help</td><td class="px-5 py-3 text-muted">Show usage</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- ─── Rules ─── -->
-<section id="rules" class="py-16 px-6 border-t border-border">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">Custom Rules</h2>
-
-        <p class="text-muted mb-6">
-            Aegira Free allows up to <strong class="text-text">3 custom rules</strong>.
-            Place JSON files in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>.
-        </p>
-
-        <!-- How to add a rule -->
-        <h3 class="text-xl font-semibold mb-4">Adding a Custom Rule</h3>
-
-        <ol class="text-sm text-muted space-y-3 mb-8 list-decimal list-inside">
-            <li>
-                Create a JSON file in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>
-                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
-                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo nano /etc/aegira/rules/custom/my-rule.json</code></pre>
-                </div>
-            </li>
-            <li>
-                Paste your rule JSON (see example below). Free allows up to <strong class="text-text">3 custom rules</strong>. Pro is unlimited.
-            </li>
-            <li>
-                Reload Aegira:
-                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
-                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl restart aegira.service</code></pre>
-                </div>
-            </li>
-            <li>
-                Verify it loaded:
-                <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
-                    <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo aegira rules list</code></pre>
-                </div>
-            </li>
-        </ol>
-
-        <!-- Example rule -->
-        <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
-            <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
-                <span class="ml-2 text-xs text-muted font-mono">example.json</span>
             </div>
-            <pre class="p-6 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+
+            <p class="text-sm text-muted">
+                Requires <strong class="text-text">Linux x86_64</strong>. Docker is optional.
+                The installer will guide you through target setup and optional email alerts.
+            </p>
+        </div>
+    </section>
+
+    <!-- Commands -->
+    <section id="commands" class="py-16 px-6 border-t border-border bg-accent/5">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Commands</h2>
+
+            <div class="rounded-2xl border border-border bg-card overflow-hidden">
+                <table class="w-full text-sm">
+                    <thead class="bg-accent/5 border-b border-border">
+                        <tr>
+                            <th class="text-left px-5 py-3 font-semibold">Command</th>
+                            <th class="text-left px-5 py-3 font-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira install</td><td class="px-5 py-3 text-muted">Install the Aegira service</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira status</td><td class="px-5 py-3 text-muted">Check if Aegira is running</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira run</td><td class="px-5 py-3 text-muted">Start monitoring in foreground</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira history</td><td class="px-5 py-3 text-muted">View past incidents</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira show-rules</td><td class="px-5 py-3 text-muted">List active rules (short)</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules list</td><td class="px-5 py-3 text-muted">List all active rules (detailed)</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules show &lt;id&gt;</td><td class="px-5 py-3 text-muted">View rule details</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules export</td><td class="px-5 py-3 text-muted">Export all rules as JSON</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules disable &lt;id&gt;</td><td class="px-5 py-3 text-muted">Disable a rule</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira rules enable &lt;id&gt;</td><td class="px-5 py-3 text-muted">Enable a disabled rule</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure service &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target systemd service</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure container &lt;name&gt;</td><td class="px-5 py-3 text-muted">Set target Docker container</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure multi &lt;c1&gt; &lt;c2&gt; ...</td><td class="px-5 py-3 text-muted">Set multiple target containers</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure auto &lt;name&gt; [--container]</td><td class="px-5 py-3 text-muted">Auto-configure service or container</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira configure alerts &lt;on|off&gt; [email]</td><td class="px-5 py-3 text-muted">Enable/disable email alerts</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">sudo aegira docker-status &lt;name&gt;</td><td class="px-5 py-3 text-muted">Inspect a container's state</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">aegira --help</td><td class="px-5 py-3 text-muted">Show usage</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules -->
+    <section id="rules" class="py-16 px-6 border-t border-border">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Custom Rules</h2>
+
+            <p class="text-muted mb-6">
+                Aegira Free allows up to <strong class="text-text">3 custom rules</strong>.
+                Place JSON files in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>.
+            </p>
+
+            <!-- How to add a rule -->
+            <h3 class="text-xl font-semibold mb-4">Adding a Custom Rule</h3>
+
+            <ol class="text-sm text-muted space-y-3 mb-8 list-decimal list-inside">
+                <li>
+                    Create a JSON file in <code class="text-accent3 font-mono text-xs">/etc/aegira/rules/custom/</code>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo nano /etc/aegira/rules/custom/my-rule.json</code></pre>
+                    </div>
+                </li>
+                <li>
+                    Paste your rule JSON (see example below). Free allows up to <strong class="text-text">3 custom rules</strong>. Pro is unlimited.
+                </li>
+                <li>
+                    Reload Aegira:
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl restart aegira.service</code></pre>
+                    </div>
+                </li>
+                <li>
+                    Verify it loaded:
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo aegira rules list</code></pre>
+                    </div>
+                </li>
+            </ol>
+
+            <!-- Example rule -->
+            <div class="rounded-2xl border border-border bg-card overflow-hidden shadow-2xl mb-6">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-border bg-accent/5">
+                    <span class="ml-2 text-xs text-muted font-mono">example.json</span>
+                </div>
+                <pre class="p-6 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "redis_restart",
   "name": "Restart Redis on connection error",
   "severity": "high",
@@ -230,41 +235,41 @@
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
-        </div>
+            </div>
 
-        <!-- Rule fields reference -->
-        <h3 class="text-xl font-semibold mb-4 mt-10">Rule Fields Reference</h3>
+            <!-- Rule fields reference -->
+            <h3 class="text-xl font-semibold mb-4 mt-10">Rule Fields Reference</h3>
 
-        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
-            <table class="w-full text-sm">
-                <thead class="bg-accent/5 border-b border-border">
-                    <tr>
-                        <th class="text-left px-5 py-3 font-semibold">Field</th>
-                        <th class="text-left px-5 py-3 font-semibold">Required</th>
-                        <th class="text-left px-5 py-3 font-semibold">Description</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border">
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">id</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Unique rule ID (lowercase, no spaces)</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">name</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Human-readable name</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">severity</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">low / medium / high / critical</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">error_patterns</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Log substrings that trigger the rule</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">context_patterns</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Additional context substrings (higher match score)</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">trigger</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">log / docker_exit / docker_health / docker_oom / http_health / container_probe / service_down</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">remediation</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_restart, container_restart, command, container_exec, command_sequence, alert_only</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">verification</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_active, container_running, container_healthy, http_status, container_http_status, command_success, none</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">action</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">auto_recover / alert_only / dry_run / approval_required</td></tr>
-                    <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">priority</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Higher = matched first (default 0)</td></tr>
-                </tbody>
-            </table>
-        </div>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+                <table class="w-full text-sm">
+                    <thead class="bg-accent/5 border-b border-border">
+                        <tr>
+                            <th class="text-left px-5 py-3 font-semibold">Field</th>
+                            <th class="text-left px-5 py-3 font-semibold">Required</th>
+                            <th class="text-left px-5 py-3 font-semibold">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">id</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Unique rule ID (lowercase, no spaces)</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">name</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Human-readable name</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">severity</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">low / medium / high / critical</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">error_patterns</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Log substrings that trigger the rule</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">context_patterns</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Additional context substrings (higher match score)</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">trigger</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">log / docker_exit / docker_health / docker_oom / http_health / container_probe</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">remediation</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_restart, container_restart, command, container_exec, command_sequence, alert_only</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">verification</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_active, container_running, container_healthy, http_status, container_http_status, command_success, none</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">action</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">auto_recover / alert_only / dry_run / approval_required</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">priority</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Higher = matched first (default 0)</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <!-- Rule examples -->
-        <h3 class="text-xl font-semibold mb-4 mt-10">Rule Examples</h3>
+            <!-- Rule examples -->
+            <h3 class="text-xl font-semibold mb-4 mt-10">Rule Examples</h3>
 
-        <p class="text-sm text-muted mb-3 font-semibold">Restart a systemd service on log error:</p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
-            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+            <p class="text-sm text-muted mb-3 font-semibold">Restart a systemd service on log error:</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+                <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "nginx_restart",
   "name": "Restart Nginx on connection error",
   "error_patterns": ["nginx: connection refused"],
@@ -274,11 +279,11 @@
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
-        </div>
+            </div>
 
-        <p class="text-sm text-muted mb-3 font-semibold">Restart a Docker container on exit 137:</p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
-            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+            <p class="text-sm text-muted mb-3 font-semibold">Restart a Docker container on exit 137:</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+                <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "app_container_restart",
   "name": "Restart app container on exit 137",
   "error_patterns": ["exit code 137"],
@@ -288,11 +293,11 @@
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
-        </div>
+            </div>
 
-        <p class="text-sm text-muted mb-3 font-semibold">Heal a service inside a container without restarting it:</p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
-            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+            <p class="text-sm text-muted mb-3 font-semibold">Heal a service inside a container without restarting it:</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+                <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "nginx_reload",
   "name": "Reload nginx config inside container",
   "error_patterns": ["nginx config error"],
@@ -302,11 +307,11 @@
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
-        </div>
+            </div>
 
-        <p class="text-sm text-muted mb-3 font-semibold">Alert only — no automatic remediation:</p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
-            <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+            <p class="text-sm text-muted mb-3 font-semibold">Alert only — no automatic remediation:</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+                <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "disk_full_alert",
   "name": "Alert on disk full",
   "error_patterns": ["no space left on device"],
@@ -316,101 +321,203 @@
   "action": "alert_only",
   "priority": 50
 }</code></pre>
-        </div>
+            </div>
 
-        <div class="mt-6 p-5 rounded-2xl border border-peach/30 bg-peach/5">
-            <p class="text-sm text-peach font-semibold mb-1">⚠️ Important</p>
-            <p class="text-sm text-muted">
-                Rules execute as <strong class="text-text">root</strong>.
-                Destructive commands are blocked best-effort, not foolproof.
-                Write your rules carefully.
+            <div class="mt-6 p-5 rounded-2xl border border-peach/30 bg-peach/5">
+                <p class="text-sm text-peach font-semibold mb-1">⚠️ Important</p>
+                <p class="text-sm text-muted">
+                    Rules execute as <strong class="text-text">root</strong>.
+                    Destructive commands are blocked best-effort, not foolproof.
+                    Write your rules carefully.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alerts -->
+    <section id="alerts" class="py-16 px-6 border-t border-border bg-accent/5">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Email Alerts (Optional)</h2>
+
+            <p class="text-muted mb-6">
+                Aegira can send Gmail alerts via Composio when incidents occur.
+                You need a free <a href="https://composio.dev" class="text-accent3 hover:underline">Composio</a> account.
+            </p>
+
+            <p class="text-sm text-muted mb-3">During install, choose to enable alerts and provide:</p>
+            <ul class="text-sm text-muted space-y-2 mb-6 list-disc list-inside">
+                <li>Composio API key (from <code class="text-accent3 font-mono text-xs">app.composio.dev</code>)</li>
+                <li>Composio user ID</li>
+                <li>Recipient email</li>
+            </ul>
+
+            <p class="text-sm text-muted mb-3">Or configure later:</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden">
+                <pre class="p-5 font-mono text-sm overflow-hidden bg-bg/50"><code><span class="text-accent3">$</span> sudo aegira configure alerts on you@example.com</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Troubleshooting -->
+    <section class="py-16 px-6 border-t border-border">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-6">Troubleshooting</h2>
+
+            <div class="space-y-4">
+                <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
+                    <summary class="font-semibold cursor-pointer flex items-center justify-between">
+                        <span>Aegira service not running</span>
+                        <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
+                    </summary>
+                    <div class="text-sm text-muted mt-3 leading-relaxed">
+                        <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                            <pre class="p-4 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl status aegira.service
+<span class="text-accent3">$</span> sudo journalctl -u aegira -n 100</code></pre>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
+                    <summary class="font-semibold cursor-pointer flex items-center justify-between">
+                        <span>Rule not matching</span>
+                        <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
+                    </summary>
+                    <p class="text-sm text-muted mt-3 leading-relaxed">
+                        Check <code class="text-accent3 font-mono text-xs">/var/log/aegira/incident.log</code> for rejection reasons.
+                        Common causes: missing <code class="text-accent3 font-mono text-xs">error_patterns</code>,
+                        invalid JSON, or target not configured.
+                    </p>
+                </details>
+
+                <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
+                    <summary class="font-semibold cursor-pointer flex items-center justify-between">
+                        <span>Alerts not arriving</span>
+                        <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
+                    </summary>
+                    <p class="text-sm text-muted mt-3 leading-relaxed">
+                        Verify your Composio API key and user ID in
+                        <code class="text-accent3 font-mono text-xs">/etc/aegira/composio.env</code>.
+                        Then check the incident log:
+                        <code class="text-accent3 font-mono text-xs">sudo grep -i alert /var/log/aegira/incident.log</code>
+                    </p>
+                </details>
+
+                <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
+                    <summary class="font-semibold cursor-pointer flex items-center justify-between">
+                        <span>Docker rules not firing</span>
+                        <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
+                    </summary>
+                    <p class="text-sm text-muted mt-3 leading-relaxed">
+                        Docker rules use <code class="text-accent3 font-mono text-xs">TARGET_CONTAINER</code>.
+                        You must configure a target:
+                        <code class="text-accent3 font-mono text-xs">sudo aegira configure container &lt;name&gt;</code>
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PRO TAB CONTENT
+════════════════════════════════════════════════════════════════ -->
+<div id="content-pro" class="tab-content hidden">
+    <section class="py-24 px-6 border-t border-border">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/5 text-xs text-accent3 mb-8">
+                <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                In Development
+            </div>
+
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                Pro Docs <span class="gradient-text">Coming Soon</span>
+            </h2>
+
+            <p class="text-lg text-muted mb-10 max-w-xl mx-auto">
+                The Pro version is launching soon with multi-service monitoring,
+                unlimited rules, and systemd service status monitoring.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">🔧</div>
+                    <h3 class="font-semibold mb-2">27 Builtin Rules</h3>
+                    <p class="text-sm text-muted">Extended rule library</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">📦</div>
+                    <h3 class="font-semibold mb-2">Multi-Service</h3>
+                    <p class="text-sm text-muted">Monitor many services at once</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">👁️</div>
+                    <h3 class="font-semibold mb-2">Systemd Monitor</h3>
+                    <p class="text-sm text-muted">Detect silent service crashes</p>
+                </div>
+            </div>
+
+            <a href="https://tally.so/r/Pd7LBV" target="_blank" rel="noopener"
+               class="inline-block px-8 py-3.5 rounded-lg bg-accent hover:bg-accent2 text-bg font-semibold transition glow">
+                Join Pro Waitlist
+            </a>
+
+            <p class="text-xs text-muted mt-6">
+                Be the first to know when Pro launches.
             </p>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
-<!-- ─── Alerts ─── -->
-<section id="alerts" class="py-16 px-6 border-t border-border bg-accent/5">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">Email Alerts (Optional)</h2>
+<!-- ═══════════════════════════════════════════════════════════════
+     COMPANY TAB CONTENT
+════════════════════════════════════════════════════════════════ -->
+<div id="content-company" class="tab-content hidden">
+    <section class="py-24 px-6 border-t border-border">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card text-xs text-muted mb-8">
+                <span class="w-2 h-2 rounded-full bg-muted"></span>
+                Planned
+            </div>
 
-        <p class="text-muted mb-6">
-            Aegira can send Gmail alerts via Composio when incidents occur.
-            You need a free <a href="https://composio.dev" class="text-accent3 hover:underline">Composio</a> account.
-        </p>
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                Company Docs <span class="gradient-text">Coming Soon</span>
+            </h2>
 
-        <p class="text-sm text-muted mb-3">During install, choose to enable alerts and provide:</p>
-        <ul class="text-sm text-muted space-y-2 mb-6 list-disc list-inside">
-            <li>Composio API key (from <code class="text-accent3 font-mono text-xs">app.composio.dev</code>)</li>
-            <li>Composio user ID</li>
-            <li>Recipient email</li>
-        </ul>
+            <p class="text-lg text-muted mb-10 max-w-xl mx-auto">
+                Multi-node support, central dashboard, cross-node recovery,
+                and role-based access for teams.
+            </p>
 
-        <p class="text-sm text-muted mb-3">Or configure later:</p>
-        <div class="rounded-2xl border border-border bg-card overflow-hidden">
-            <pre class="p-5 font-mono text-sm overflow-hidden bg-bg/50"><code><span class="text-accent3">$</span> sudo aegira configure alerts on you@example.com</code></pre>
-        </div>
-    </div>
-</section>
-
-<!-- ─── Troubleshooting ─── -->
-<section class="py-16 px-6 border-t border-border">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">Troubleshooting</h2>
-
-        <div class="space-y-4">
-            <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
-                <summary class="font-semibold cursor-pointer flex items-center justify-between">
-                    <span>Aegira service not running</span>
-                    <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
-                </summary>
-                <div class="text-sm text-muted mt-3 leading-relaxed">
-                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
-                        <pre class="p-4 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl status aegira.service
-<span class="text-accent3">$</span> sudo journalctl -u aegira -n 100</code></pre>
-                    </div>
+            <div class="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-12">
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">🌐</div>
+                    <h3 class="font-semibold mb-2">Multi-Node</h3>
+                    <p class="text-sm text-muted">Coordinate many servers</p>
                 </div>
-            </details>
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">📊</div>
+                    <h3 class="font-semibold mb-2">Dashboard</h3>
+                    <p class="text-sm text-muted">Central visibility</p>
+                </div>
+                <div class="p-6 rounded-2xl bg-card border border-border">
+                    <div class="text-2xl mb-3">🔐</div>
+                    <h3 class="font-semibold mb-2">RBAC</h3>
+                    <p class="text-sm text-muted">Team permissions</p>
+                </div>
+            </div>
 
-            <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
-                <summary class="font-semibold cursor-pointer flex items-center justify-between">
-                    <span>Rule not matching</span>
-                    <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
-                </summary>
-                <p class="text-sm text-muted mt-3 leading-relaxed">
-                    Check <code class="text-accent3 font-mono text-xs">/var/log/aegira/incident.log</code> for rejection reasons.
-                    Common causes: missing <code class="text-accent3 font-mono text-xs">error_patterns</code>,
-                    invalid JSON, or target not configured.
-                </p>
-            </details>
+            <a href="https://tally.so/r/kd2Xpj" target="_blank" rel="noopener"
+               class="inline-block px-8 py-3.5 rounded-lg border border-border hover:border-accent/50 font-semibold transition">
+                Join Company Waitlist
+            </a>
 
-            <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
-                <summary class="font-semibold cursor-pointer flex items-center justify-between">
-                    <span>Alerts not arriving</span>
-                    <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
-                </summary>
-                <p class="text-sm text-muted mt-3 leading-relaxed">
-                    Verify your Composio API key and user ID in
-                    <code class="text-accent3 font-mono text-xs">/etc/aegira/composio.env</code>.
-                    Then check the incident log:
-                    <code class="text-accent3 font-mono text-xs">sudo grep -i alert /var/log/aegira/incident.log</code>
-                </p>
-            </details>
-
-            <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
-                <summary class="font-semibold cursor-pointer flex items-center justify-between">
-                    <span>Docker rules not firing</span>
-                    <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
-                </summary>
-                <p class="text-sm text-muted mt-3 leading-relaxed">
-                    Docker rules use <code class="text-accent3 font-mono text-xs">TARGET_CONTAINER</code>.
-                    You must configure a target:
-                    <code class="text-accent3 font-mono text-xs">sudo aegira configure container &lt;name&gt;</code>
-                </p>
-            </details>
+            <p class="text-xs text-muted mt-6">
+                Planned for a future release.
+            </p>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- ─── Footer ─── -->
 <footer class="py-12 px-6 border-t border-border bg-accent/5">
@@ -432,6 +539,42 @@
         </div>
     </div>
 </footer>
+
+<!-- ─── Tab Switching Script ─── -->
+<script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = {
+        free: document.getElementById('content-free'),
+        pro: document.getElementById('content-pro'),
+        company: document.getElementById('content-company'),
+    };
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+
+            // Update button styles
+            tabs.forEach(t => {
+                t.classList.remove('bg-accent', 'text-bg');
+                t.classList.add('text-muted');
+            });
+            tab.classList.add('bg-accent', 'text-bg');
+            tab.classList.remove('text-muted');
+
+            // Show/hide content
+            Object.entries(contents).forEach(([key, el]) => {
+                if (key === target) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
 
 </body>
 </html>
