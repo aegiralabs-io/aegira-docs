@@ -7,5 +7,5 @@ Live: https://aegiralabs-io.github.io/aegira-docs/
 ## Links
 
 - Website: https://aegiralabs-io.github.io/aegira-labs-web/
-- Releases: https://github.com/aegiralabs-io/aegira-free-x86_64.tar.gz
+- Releases: https://github.com/aegiralabs-io/Aegira-free-v1-releases
 - Contact: aegira.dev@gmail.com
