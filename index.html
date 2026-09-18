@@ -221,7 +221,7 @@
     "redis connection refused"
   ],
   "context_patterns": ["redis"],
-  "trigger": {"type": "log"},
+  "trigger": { "type": "log" },
   "remediation": {
     "type": "service_restart",
     "service": "redis"
@@ -252,13 +252,47 @@
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">severity</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">low / medium / high / critical</td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">error_patterns</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">Log substrings that trigger the rule</td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">context_patterns</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Additional context substrings (higher match score)</td></tr>
-                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">trigger</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">log / docker_exit / docker_health / docker_oom / http_health / container_probe</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">trigger</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Object — see Trigger section below. Defaults to <code class="text-accent3 font-mono text-xs">{ "type": "log" }</code></td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">remediation</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_restart, container_restart, command, container_exec, command_sequence, alert_only</td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">verification</td><td class="px-5 py-3 text-muted">Yes</td><td class="px-5 py-3 text-muted">service_active, container_running, container_healthy, http_status, container_http_status, command_success, none</td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">action</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">auto_recover / alert_only / dry_run / approval_required</td></tr>
                         <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">priority</td><td class="px-5 py-3 text-muted">No</td><td class="px-5 py-3 text-muted">Higher = matched first (default 0)</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-4 mt-10">Trigger Types</h3>
+
+            <p class="text-sm text-muted mb-4">
+                The <code class="text-accent3 font-mono text-xs">trigger</code> field is an object with a <code class="text-accent3 font-mono text-xs">type</code> key.
+                Supported types:
+            </p>
+
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+                <table class="w-full text-sm">
+                    <thead class="bg-accent/5 border-b border-border">
+                        <tr>
+                            <th class="text-left px-5 py-3 font-semibold">Type</th>
+                            <th class="text-left px-5 py-3 font-semibold">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">log</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "log" }</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">docker_exit</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "docker_exit", "container": "my-app", "exit_codes": [137] }</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">docker_health</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "docker_health", "container": "my-app", "status": "unhealthy" }</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">docker_oom</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "docker_oom", "container": "my-app" }</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">http_health</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "http_health", "url": "http://...", "container": "my-app", "expected_status": 200 }</td></tr>
+                        <tr><td class="px-5 py-3 font-mono text-accent3 text-xs">container_probe</td><td class="px-5 py-3 font-mono text-xs text-muted">{ "type": "container_probe", "container": "my-db", "executable": "pg_isready" }</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 p-5 rounded-2xl border border-accent/30 bg-accent/5">
+                <p class="text-sm text-accent3 font-semibold mb-1">💡 Trigger Format</p>
+                <p class="text-sm text-muted">
+                    <code class="text-accent3 font-mono text-xs">trigger</code> is always an <strong class="text-text">object</strong>, never a string.
+                    Use <code class="text-accent3 font-mono text-xs">{ "type": "log" }</code> — not <code class="text-peach font-mono text-xs">"log"</code>.
+                </p>
             </div>
 
             <h3 class="text-xl font-semibold mb-4 mt-10">Rule Examples</h3>
@@ -268,10 +302,10 @@
                 <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
   "id": "nginx_restart",
   "name": "Restart Nginx on connection error",
-  "error_patterns": ["nginx: connection refused"],
-  "trigger": {"type": "log"},
-  "remediation": {"type": "service_restart", "service": "nginx"},
-  "verification": {"type": "service_active", "service": "nginx"},
+  "error_patterns": ["nginx", "connection refused", "failed"],
+  "trigger": { "type": "log" },
+  "remediation": { "type": "service_restart", "service": "nginx" },
+  "verification": { "type": "service_active", "service": "nginx" },
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
@@ -283,9 +317,9 @@
   "id": "app_container_restart",
   "name": "Restart app container on exit 137",
   "error_patterns": ["exit code 137"],
-  "trigger": {"type": "docker_exit", "container": "my-app", "exit_codes": [137]},
-  "remediation": {"type": "container_restart", "container": "my-app"},
-  "verification": {"type": "container_running", "container": "my-app"},
+  "trigger": { "type": "docker_exit", "container": "my-app", "exit_codes": [137] },
+  "remediation": { "type": "container_restart", "container": "my-app" },
+  "verification": { "type": "container_running", "container": "my-app" },
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
@@ -297,9 +331,9 @@
   "id": "nginx_reload",
   "name": "Reload nginx config inside container",
   "error_patterns": ["nginx config error"],
-  "trigger": {"type": "log"},
-  "remediation": {"type": "container_exec", "container": "nginx", "args": ["nginx", "-s", "reload"]},
-  "verification": {"type": "container_http_status", "container": "nginx", "url": "http://127.0.0.1:8080/health", "expected_status": 200},
+  "trigger": { "type": "log" },
+  "remediation": { "type": "container_exec", "container": "nginx", "args": ["nginx", "-s", "reload"] },
+  "verification": { "type": "container_http_status", "container": "nginx", "url": "http://127.0.0.1:8080/health", "expected_status": 200 },
   "action": "auto_recover",
   "priority": 50
 }</code></pre>
@@ -311,9 +345,9 @@
   "id": "disk_full_alert",
   "name": "Alert on disk full",
   "error_patterns": ["no space left on device"],
-  "trigger": {"type": "log"},
-  "remediation": {"type": "alert_only"},
-  "verification": {"type": "none"},
+  "trigger": { "type": "log" },
+  "remediation": { "type": "alert_only" },
+  "verification": { "type": "none" },
   "action": "alert_only",
   "priority": 50
 }</code></pre>
@@ -378,11 +412,19 @@
                         <span>Rule not matching</span>
                         <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
                     </summary>
-                    <p class="text-sm text-muted mt-3 leading-relaxed">
-                        Check <code class="text-accent3 font-mono text-xs">/var/log/aegira/incident.log</code> for rejection reasons.
-                        Common causes: missing <code class="text-accent3 font-mono text-xs">error_patterns</code>,
-                        invalid JSON, or target not configured.
-                    </p>
+                    <div class="text-sm text-muted mt-3 leading-relaxed">
+                        <p class="mb-2">Check the Aegira journal for rejection reasons:</p>
+                        <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mb-2">
+                            <pre class="p-4 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo journalctl -u aegira -n 50 | grep -i "rules\|skip\|invalid"</code></pre>
+                        </div>
+                        <p>Common causes:</p>
+                        <ul class="list-disc list-inside space-y-1 mt-2">
+                            <li>Missing <code class="text-accent3 font-mono text-xs">error_patterns</code></li>
+                            <li>Invalid JSON syntax</li>
+                            <li>Wrong <code class="text-accent3 font-mono text-xs">trigger</code> format (must be object, not string)</li>
+                            <li>Target not configured</li>
+                        </ul>
+                    </div>
                 </details>
 
                 <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
@@ -407,6 +449,19 @@
                         Docker rules use <code class="text-accent3 font-mono text-xs">TARGET_CONTAINER</code>.
                         You must configure a target:
                         <code class="text-accent3 font-mono text-xs">sudo aegira configure container &lt;name&gt;</code>
+                    </p>
+                </details>
+
+                <details class="group p-5 rounded-2xl bg-card border border-border hover:border-accent/40 transition">
+                    <summary class="font-semibold cursor-pointer flex items-center justify-between">
+                        <span>Journald not detecting services</span>
+                        <span class="text-accent3 group-open:rotate-45 transition text-xl">+</span>
+                    </summary>
+                    <p class="text-sm text-muted mt-3 leading-relaxed">
+                        Aegira monitors journald (systemd logs). If a service isn't detected,
+                        verify it logs to journald:
+                        <code class="text-accent3 font-mono text-xs">journalctl -u &lt;service&gt; -n 20</code>.
+                        If no output, the service may not be a systemd unit.
                     </p>
                 </details>
             </div>
