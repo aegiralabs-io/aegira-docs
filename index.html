@@ -339,6 +339,35 @@
 }</code></pre>
             </div>
 
+            <p class="text-sm text-muted mb-3 font-semibold">HTTP health check + container exec (fix service inside a running container):</p>
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-4">
+                <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
+  "id": "nginx_http_health",
+  "name": "Nginx HTTP health check + container exec",
+  "error_patterns": ["HTTP health check failed"],
+  "trigger": {
+    "type": "http_health",
+    "url": "http://localhost:8080/",
+    "container": "my-app",
+    "expected_status": 200,
+    "interval_secs": 5
+  },
+  "remediation": {
+    "type": "container_exec",
+    "container": "my-app",
+    "args": ["nginx"]
+  },
+  "verification": {
+    "type": "container_http_status",
+    "container": "my-app",
+    "url": "http://localhost:8080/",
+    "expected_status": 200
+  },
+  "action": "auto_recover",
+  "priority": 50
+}</code></pre>
+            </div>
+
             <p class="text-sm text-muted mb-3 font-semibold">Alert only — no automatic remediation:</p>
             <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
                 <pre class="p-5 font-mono text-xs overflow-hidden bg-bg/50"><code>{
@@ -364,8 +393,202 @@
         </div>
     </section>
 
+    <!-- Testing Sequence & Timing -->
+    <section id="testing-sequence" class="py-16 px-6 border-t border-border bg-accent/5">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Testing Sequence &amp; Timing</h2>
+
+            <p class="text-muted mb-6">
+                After creating a rule, follow this sequence to ensure Aegira detects and recovers correctly.
+                Skipping steps (especially the waits) is the most common reason rules don't fire.
+            </p>
+
+            <div class="p-5 rounded-2xl border border-accent/30 bg-card mb-8">
+                <p class="text-sm text-accent3 font-semibold mb-1">💡 Quick Summary</p>
+                <p class="text-sm text-muted">
+                    <strong class="text-text">Rule → Restart → Wait → Configure → Restart → Clear Log → Crash → Wait → Check</strong>
+                </p>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-4">Step-by-Step Sequence</h3>
+
+            <ol class="text-sm text-muted space-y-4 mb-8 list-decimal list-inside">
+
+                <li>
+                    <strong class="text-text">Create your rule</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo nano /etc/aegira/rules/custom/my-rule.json</code></pre>
+                    </div>
+                    <p class="mt-2">Paste your JSON and save.</p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Reload Aegira</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl restart aegira</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        Aegira reloads rules dynamically when the file changes, but a restart guarantees
+                        the new rule is loaded.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Verify the rule loaded</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo aegira rules list</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        Look for your rule in the <strong class="text-text">Custom</strong> section.
+                        If it's not there, check the journal for rejection reasons.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Wait 10&ndash;15 seconds</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sleep 15</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        Aegira's monitoring threads need time to start. This ensures journald,
+                        Docker events, and HTTP health monitors are running before you test.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Configure your target</strong> (if the rule uses <code class="text-accent3 font-mono text-xs">TARGET_SERVICE</code> or <code class="text-accent3 font-mono text-xs">TARGET_CONTAINER</code>)
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo aegira configure service nginx
+<span class="text-muted"># or</span>
+<span class="text-accent3">$</span> sudo aegira configure container my-app</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <strong class="text-text">Restart Aegira again</strong> (to load the new target)
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo systemctl restart aegira
+<span class="text-accent3">$</span> sleep 15</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        Target configuration is loaded at startup. Without a restart, the rule won't
+                        know which service or container to target.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Clear the incident log</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo truncate -s 0 /var/log/aegira/incident.log</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        This ensures only the new incident is visible in the log. Old entries make
+                        it hard to verify whether the new rule fired.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Trigger the crash</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-muted"># systemd service</span>
+<span class="text-accent3">$</span> sudo systemctl stop nginx
+
+<span class="text-muted"># Docker container</span>
+<span class="text-accent3">$</span> docker kill my-app</code></pre>
+                    </div>
+                </li>
+
+                <li>
+                    <strong class="text-text">Wait 10&ndash;15 seconds</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sleep 15</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        Aegira needs time to detect the crash, match the rule, run the recovery,
+                        and verify the result.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Check the recovery log</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-accent3">$</span> sudo cat /var/log/aegira/incident.log</code></pre>
+                    </div>
+                    <p class="mt-2">
+                        You should see <code class="text-accent3 font-mono text-xs">[WATCHER]</code>,
+                        <code class="text-accent3 font-mono text-xs">[RECOVER]</code>, and
+                        <code class="text-accent3 font-mono text-xs">[RESOLVED]</code> entries.
+                    </p>
+                </li>
+
+                <li>
+                    <strong class="text-text">Verify recovery</strong>
+                    <div class="rounded-xl border border-border bg-bg/50 overflow-hidden mt-2">
+                        <pre class="p-3 font-mono text-xs overflow-hidden"><code><span class="text-muted"># systemd service</span>
+<span class="text-accent3">$</span> sudo systemctl is-active nginx
+
+<span class="text-muted"># Docker container</span>
+<span class="text-accent3">$</span> docker inspect -f '{{.State.Status}}' my-app</code></pre>
+                    </div>
+                </li>
+
+            </ol>
+
+            <h3 class="text-xl font-semibold mb-4 mt-10">Timing Cheat Sheet</h3>
+
+            <div class="rounded-2xl border border-border bg-card overflow-hidden mb-6">
+                <table class="w-full text-sm">
+                    <thead class="bg-accent/5 border-b border-border">
+                        <tr>
+                            <th class="text-left px-5 py-3 font-semibold">Action</th>
+                            <th class="text-left px-5 py-3 font-semibold">Wait Time</th>
+                            <th class="text-left px-5 py-3 font-semibold">Why</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        <tr>
+                            <td class="px-5 py-3 text-muted">After rule reload</td>
+                            <td class="px-5 py-3 font-mono text-accent3 text-xs">10&ndash;15s</td>
+                            <td class="px-5 py-3 text-muted">Monitoring threads need to start</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-3 text-muted">After target configure</td>
+                            <td class="px-5 py-3 font-mono text-accent3 text-xs">10&ndash;15s</td>
+                            <td class="px-5 py-3 text-muted">Config loaded at startup</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-3 text-muted">After crash</td>
+                            <td class="px-5 py-3 font-mono text-accent3 text-xs">10&ndash;15s</td>
+                            <td class="px-5 py-3 text-muted">Detect + match + recover + verify</td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-3 text-muted">HTTP health poll</td>
+                            <td class="px-5 py-3 font-mono text-accent3 text-xs">5s default</td>
+                            <td class="px-5 py-3 text-muted">Configurable via <code class="text-accent3 font-mono text-xs">interval_secs</code></td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-3 text-muted">Cooldown (after recovery)</td>
+                            <td class="px-5 py-3 font-mono text-accent3 text-xs">30s&ndash;600s</td>
+                            <td class="px-5 py-3 text-muted">Prevents infinite restart loops</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-5 rounded-2xl border border-peach/30 bg-peach/5">
+                <p class="text-sm text-peach font-semibold mb-1">⚠️ Common Mistakes</p>
+                <ul class="text-sm text-muted space-y-2 list-disc list-inside">
+                    <li><strong class="text-text">Testing too fast</strong> — if you crash a service within 2 seconds of starting Aegira, the initial snapshot may not have completed yet.</li>
+                    <li><strong class="text-text">Forgetting the second restart</strong> — after configuring a target, Aegira must restart to load it.</li>
+                    <li><strong class="text-text">Not clearing the log</strong> — old incidents make it hard to tell if the new rule fired.</li>
+                    <li><strong class="text-text">Wrong trigger format</strong> — <code class="text-accent3 font-mono text-xs">trigger</code> is an object, not a string: <code class="text-accent3 font-mono text-xs">{ "type": "log" }</code>.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <!-- Alerts -->
-    <section id="alerts" class="py-16 px-6 border-t border-border bg-accent/5">
+    <section id="alerts" class="py-16 px-6 border-t border-border">
         <div class="max-w-3xl mx-auto">
             <h2 class="text-2xl md:text-3xl font-bold mb-6">Email Alerts (Optional)</h2>
 
@@ -389,7 +612,7 @@
     </section>
 
     <!-- Troubleshooting -->
-    <section class="py-16 px-6 border-t border-border">
+    <section class="py-16 px-6 border-t border-border bg-accent/5">
         <div class="max-w-3xl mx-auto">
             <h2 class="text-2xl md:text-3xl font-bold mb-6">Troubleshooting</h2>
 
